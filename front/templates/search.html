@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    搜索
+{% endblock %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+{% endblock %}
+
+
+{% block article %}
+    <aside class="l_box">
+
+        <div class="about_me">
+            <h2>关于我</h2>
+            <ul>
+                <i><img src="{% static 'images/1.jpg' %}"></i>
+                <p><b>余</b>{{ intr }}</p>
+            </ul>
+        </div>
+
+
+
+    </aside>
+
+
+    <main class="r_box">
+        <form action="#" method="get" name='search-form' class="search">
+            <input name='search-text' class='search-text' type="text">
+            <input class='search-btn' value="搜索"  type="submit">
+            {% if error %}
+                <p style="color: red">{{ error }}</p>
+            {% endif %}
+        </form>
+
+        {% if message %}
+            <p>{{ message }}</p>
+        {% else %}
+            {% for article in articles %}
+            <li><i><a href="/{{ article.author.username }}/article/{{ article.pk }}"><img
+                    src="{% static 'images/1.jpg' %}"></a></i>
+                <h3 style="height:24px; position: relative"><a
+                        href="/{{ article.author.username }}/article/{{ article.pk }}">{{ article.title }}</a></h3>
+                <p style="height: 40px;">{{ article.excerpt }}</p>
+                <div style="overflow:hidden;margin-top:10px; "><span
+                        style="float: left">{{ article.author.username }} </span>
+                    <span style="float:left;margin-left: 10px">{{ article.pub_time }} </span>
+                    <span style="float:left;margin-left: 10px">点赞({{ article.like }})</span><i class="fa fa-thumbs-up"
+                                                                                               aria-hidden="true"></i>
+                </div>
+            </li>
+        {% endfor %}
+        {% endif %}
+
+{#        {% for article in articles %}#}
+{#            <li><i><a href="/{{ article.author.username }}/article/{{ article.pk }}"><img#}
+{#                    src="{% static 'images/1.jpg' %}"></a></i>#}
+{#                <h3 style="height:24px; position: relative"><a#}
+{#                        href="/{{ article.author.username }}/article/{{ article.pk }}">{{ article.title }}</a></h3>#}
+{#                <p style="height: 40px;">{{ article.excerpt }}</p>#}
+{#                <div style="overflow:hidden;margin-top:10px; "><span#}
+{#                        style="float: left">{{ article.author.username }} </span>#}
+{#                    <span style="float:left;margin-left: 10px">{{ article.pub_time }} </span>#}
+{#                    <span style="float:left;margin-left: 10px">点赞({{ article.like }})</span><i class="fa fa-thumbs-up"#}
+{#                                                                                               aria-hidden="true"></i>#}
+{#                </div>#}
+{#            </li>#}
+{#        {% endfor %}#}
+
+        {#    <li><i><a href="/"><img src="images/1.jpg"></a></i>#}
+        {#      <h3><a href="/">你是什么人便会遇上什么人</a></h3>#}
+        {#      <p>有时就为了一句狠话，像心头一口毒钉，永远麻痺着亲密感情交流。恶言，真要慎出，平日多誠心爱语，乃最简易之佈施。</p>#}
+        {#    </li>#}
+
+    </main>
+{% endblock %}

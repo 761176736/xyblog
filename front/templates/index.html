@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block article %}
+    <aside class="l_box">
+
+        <div class="about_me">
+            <h2>关于我</h2>
+            <ul>
+                <i><img src="{% static 'images/1.jpg' %}"></i>
+                <p><b>余</b>{{ intr }}</p>
+            </ul>
+        </div>
+
+
+                <div class="search">
+                    <form action="/search/" method="get" name="search-form" id="searchform">
+                        <input name="search-text" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);">
+
+                        <input name="Submit" class="input_submit" value="搜索" type="submit">
+                    </form>
+                </div>
+
+                <div class="fenlei">
+                    <h2>文章分类</h2>
+                    <ul>
+                        {% for category in categories %}
+                        <li><a href="/category/{{ category.name }}/">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+    </aside>
+
+
+
+    <main class="r_box">
+        {% for article in articles %}
+            <li><i><a href="/{{ article.author.username }}/article/{{ article.pk }}"><img src="{% static 'images/1.jpg' %}"></a></i>
+                <h3 style="height:24px; position: relative"><a
+                        href="/{{ article.author.username }}/article/{{ article.pk }}">{{ article.title }}</a></h3>
+                <p style="height: 40px;">{{ article.excerpt }}</p>
+                <div style="overflow:hidden;margin-top:10px; "><span style="float: left" >{{ article.author.username }} </span>
+                    <span style="float:left;margin-left: 10px">{{ article.pub_time }} </span>
+                    <span style="float:left;margin-left: 10px">点赞({{ article.like }})</span><i class="fa fa-thumbs-up" aria-hidden="true"></i></div>
+            </li>
+        {% endfor %}
+
+        <div class="pagelist">
+            <a class="allpage"><b>{{ num_pages }}</b></a>&nbsp;&nbsp;
+            {# 上一页 #}
+            {% if page_obj.has_previous %}
+                <a href="?p={{ page_obj.previous_page_number }}">上一页</a>&nbsp;&nbsp;
+            {% else %}
+                <a href="javascript:void (0);">上一页</a>&nbsp;&nbsp;
+            {% endif %}
+
+            {# 是否要左三点#}
+            {% if left_has_more %}
+                <a href="?p=1" class="curPage">1</a>&nbsp;&nbsp;
+                <a href="javascript:void (0);">...</a>&nbsp;&nbsp;
+            {% endif %}
+
+            {# 左边紧挨的页码 #}
+            {% for left_page in left_pages %}
+                <a href="?p={{ left_page }}">{{ left_page }}</a>&nbsp;&nbsp;
+            {% endfor %}
+
+            {# 当前页面 #}
+            <a href="?p={{ current_page }}" class="curPage">{{ current_page }}</a>&nbsp;&nbsp;
+
+            {# 右边紧挨的页码 #}
+            {% for right_page in right_pages %}
+                <a href="?p={{ right_page }}">{{ right_page }}</a>&nbsp;&nbsp;
+            {% endfor %}
+
+            {# 是否要右边三点#}
+            {% if right_has_more %}
+                <a href="javascript:void (0);">...</a>
+                <a href="?p={{ num_pages }}">{{ num_pages }}</a>&nbsp;&nbsp;
+            {% endif %}
+
+            {# 下一页 #}
+            {% if page_obj.has_next %}
+                <a href="?p={{ page_obj.next_page_number }}">下一页</a>&nbsp;&nbsp;
+            {% else %}
+                <a href="javascript:void (0);" class="disabled">下一页</a>&nbsp;&nbsp;
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}
+
+

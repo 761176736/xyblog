@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}>
+    <script charset="utf-8" src="{% static 'kindeditor/config.js' %}"></script>
+    <style>
+
+        #title {
+            font-size: 18px;
+        }
+
+        .form-control {
+            height: 20px;
+            width: 400px;
+        }
+
+        #content{
+            margin-top: 20px;
+        }
+
+        #content p {
+            font-size: 20px;
+            height: 40px;
+            width: 100px;
+            margin-top: 10px;
+        }
+
+        #article-content {
+            height: 100px;
+            width: 400px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            height: 40px;
+            width: 60px;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        #categories-tags{
+            margin-top: 40px;
+            height:40px;
+        }
+        #category{
+            height:24px;
+            width: 70px;
+        }
+
+        #tag{
+            height: 70px;
+            width: 70px;
+            margin-top: -20px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block article %}
+    <div class="content">
+        <form action="" method="post" style="margin-left: 100px">
+            <div id="title">
+                <label for="">文章标题</label>
+                <input type="text" name="title" class="form-control">
+            </div>
+
+            <div id="categories-tags">
+                <label>文章类别:</label>
+                <select name="category" id="category" >
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+
+
+
+
+
+
+                <label for="">文章标签:</label>
+                <select name="tag" id="tag" multiple="multiple" >
+                    {% for tag in tags %}
+                        <option value="{{ tag }}">{{ tag }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+
+
+            <div id="content">
+                <p><strong>内容</strong></p>
+                <textarea name="article-content" id="article-content" cols="60" rows="20"></textarea>
+                <input type="submit" class="btn btn-info"  style="margin-top: 10px;">
+            </div>
+        </form>
+    </div>
+
+    <div style="margin-top: 40px"></div>
+
+
+
+    <script charset="utf-8" src="{% static 'kindeditor/kindeditor-all-min.js' %}"></script>
+    <script charset="utf-8" src="{% static 'kindeditor/lang/zh-CN.js' %}"></script>
+
+    <script>
+        KindEditor.ready(function (K) {
+            window.editor = K.create('#article-content', {
+                width: 700,
+                height: 400,
+                uploadJson: '/upload/',
+                filePostName: 'upload_img'//指定文件名称
+            })
+        });
+    </script>
+
+
+
+{% endblock %}

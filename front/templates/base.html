@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <link href="{% static  'css/index.css'%}" rel="stylesheet">
+    <link href="{% static 'css/m.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript" src="{% static 'js/comm.js' %}"></script>
+
+{% block head %}
+{% endblock %}
+
+</head>
+<body>
+<header class="header-navigation" id="header">
+    <nav>
+        <div class="logo"><a href="/">小雨个人博客</a></div>
+        <h2 id="mnavh"><span class="navicon"></span></h2>
+
+        <ul  style="font-size: 16px;cursor: pointer">
+            {% if user.is_authenticated %}
+                <li style="float: left;margin-left:20px; "><a href="/{{ user.username }}/person/">{{ user.username }}</a></li>
+                {% if user.is_superuser %}
+                    <a href="/xadmin/" style="float: left;margin-left:20px; ">管理系统</a>
+                {% endif %}
+
+                <a href="{% url 'auth:logout' %}"  style="float: left;margin-left:20px; ">退出</a>
+            {% else %}
+                 <li style="float: left;margin-left:20px; "><a href="{% url 'blog:log-page' %}">登陆/注册</a></li>
+            {% endif %}
+
+
+
+
+        </ul>
+
+        <ul id="starlist">
+            <li><a href="{% url 'blog:index' %}">网站首页</a></li>
+            {% if user.is_superuser %}
+                <li><a href="{% url 'user:write' %}">撰写文章</a></li>
+            {% endif %}
+            <li><a href="{% url  'blog:about' %}">关于我</a></li>
+            <li><a href="{% url  'blog:message'%}">留言</a></li>
+        </ul>
+    </nav>
+</header>
+
+<article>
+
+    {% block article %}
+
+    {% endblock %}
+</article>
+
+
+</body>
+</html>

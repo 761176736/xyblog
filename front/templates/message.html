@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <script type="text/javascript" src="{% static  'js/message.js'%}"></script>
+{% endblock %}
+
+{% block article %}
+    <aside class="l_box">
+
+        <div class="about_me">
+            <h2>关于我</h2>
+            <ul>
+                <i><img src="{% static 'images/1.jpg' %}"></i>
+                <p><b>余</b>{{ intr }}</p>
+            </ul>
+        </div>
+
+
+        <div class="search">
+            <form action="/search/" method="get" name="search-form" id="searchform">
+                <input name="search-text" id="keyboard" class="input_text" value="请输入关键字词"
+                       style="color: rgb(153, 153, 153);">
+
+                <input name="Submit" class="input_submit" value="搜索" type="submit">
+            </form>
+        </div>
+
+
+        <div class="fenlei">
+            <h2>文章分类</h2>
+            <ul>
+                {% for category in categories %}
+                    <li><a href="/category/{{ category.name }}/">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+    </aside>
+    <main class="r_box">
+        <div class="gbook">
+
+            <ul id="messages">
+                {% for message in messages %}
+                    <li class="fb" style="">
+                        <ul><img src="/media/avatar/{{ message.author.avatar }}" alt=""
+                                 style="float: left;margin-left: -60px;margin-top: 10px;border-radius: 50%;width: 50px;height: 50px">
+                            <p class="fbtime" style="margin-top: -20px"><span style="">{{ message.pub_time|date:'Y-m-d H:i' }}</span><a style="text-decoration: none">#{{ forloop.counter }}楼&nbsp;&nbsp;</a>
+                                <a style="cursor: pointer">{{ message.author.username }}</a>
+                            </p>
+
+                            <p class="fbinfo"
+                               style="width:560px;box-sizing: border-box;word-break: break-all;word-wrap: break-word;">{{ message.content }}</p>
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+
+
+            <div class="gbox">
+
+
+                    <p><strong>来说点儿什么吧...</strong></p>
+                    {% if user.username %}
+                        <p><span> 昵称:</span>
+                            <input name="name" type="text" id="name" readonly placeholder="{{ user.username }}">
+                        </p>
+                        <p><span class="tnr">留言内容:</span>
+                            <textarea class="message-content" name="lytext" cols="60" rows="12" id="lytext" style="font-size: 16px"></textarea>
+                        </p>
+                        <p>
+                            <input class="messaage-sunmit" type="submit" name="Submit3" value="提交">
+{#                           <input name="enews" type="hidden" id="enews" value="AddGbook">#}
+                        </p>
+                    {% else %}
+                        <p><span class="tnr">留言内容:</span>
+                            <textarea name="lytext" cols="60" rows="12" id="lytext" readonly placeholder="请先登录后再留言吧！"
+                                      style="font-size: 16px"></textarea>
+                        </p>
+                        <p>
+                            <a href="{% url 'blog:log-page' %}"
+                               style="display: block;background: #040404;color: #fff;border: 0;line-height: 30px;padding: 0 20px;border-radius: 5px;float: right;">登陆</a>
+                                                    <input type="submit" name="Submit3" value="提交">
+{#                            <input name="enews" type="hidden" id="enews" value="AddGbook">#}
+                        </p>
+                    {% endif %}
+
+            </div>
+        </div>
+    </main>
+{% endblock %}
+

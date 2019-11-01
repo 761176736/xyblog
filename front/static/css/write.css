@@ -1,0 +1,48 @@
+#title {
+    font-size: 18px;
+}
+
+.form-control {
+    height: 20px;
+    width: 400px;
+}
+
+#content {
+    margin-top: 20px;
+}
+
+#content p {
+    font-size: 20px;
+    height: 40px;
+    width: 100px;
+    margin-top: 10px;
+}
+
+#article-content {
+    height: 100px;
+    width: 400px;
+    margin-top: 20px;
+}
+
+.btn {
+    height: 40px;
+    width: 60px;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#categories-tags {
+    margin-top: 40px;
+    height: 40px;
+}
+
+#category {
+    height: 24px;
+    width: 70px;
+}
+
+#tag {
+    height: 70px;
+    width: 70px;
+    margin-top: -20px;
+}

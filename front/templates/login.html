@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆页面</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/auth.js' %}"></script>
+</head>
+<body>
+<!--背景-->
+<div class="wel" id="background-3"></div>
+<!--左右两边云-->
+<div class="wel" id="box">
+    <div class="box-1 lefp"></div>
+    <div class="box-1">
+        <div class="righp"></div>
+    </div>
+</div>
+<!--荧光点点-->
+<div class="wel" id="git"></div>
+<!--登录注册表-->
+<div class="wel" id="from">
+    <div class="box-2 le-1">
+        <form action="" method="post">
+            <div class="flrg" id="signin-group">
+                    <h3>登录</h3>
+                <div class="a">
+                    <!--<label>账号：</label>-->
+                    <input type="text" name="email" class="in-1" placeholder="邮箱">
+                </div>
+                <div class="a">
+                    <!--<label>密码：</label>-->
+                    <input type="password" name="password" class="in-1" placeholder="密码">
+                </div>
+                <div id="login-errors" style="color: red">
+
+                </div>
+                <div class="a">
+                    <button class="submit-btn" type="button">登录</button>
+                </div>
+                <div class="a">
+                    <div class="hr"></div>
+                </div>
+
+                <div class="a">
+                    <label class="remember-label">
+                        <input type="checkbox" name="remember" value="1">记住我
+                    </label>
+                </div>
+                <div class="input-group">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="box-2 le-2">
+        <form action="" method="post">
+            <div class="flrg-1" id="signup-group">
+                <h3>注册</h3>
+                <div class="a">
+                    <input type="text" class="in-1" name="username" placeholder="您的用户名">
+                </div>
+                <div class="a">
+                    <input type="email" class="in-1"  name="email" placeholder="输入邮箱地址">
+                </div>
+                <div class="a">
+                    <input type="password" class="in-1" name="pwd1" placeholder="输入密码">
+                </div>
+                <div class="a">
+                    <input type="password" class="in-1" name="pwd2" placeholder="再次确认密码">
+                </div>
+                <div id="errors" style="color: red">
+                </div>
+                <div class="a">
+                    <button type="button" class="submit-btn">注册</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div style="text-align:center;">
+
+</div>
+</body>
+</html>

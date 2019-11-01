@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+个人中心
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/person.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sweetalert2.min.css' %}">
+    <script src="{% static 'js/sweetalert2.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/person.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+
+{% block article %}
+    <div class="person">
+        <div class="basics">
+            <ul class="left">
+                <li>
+                    <p class="avatar"><img id="avatar" src="/media/avatar/{{ user.avatar }}" alt=""></p>
+                    <label class="btn-file">上传图片<input hidden type="file"  id="avatar-btn">
+                    </label>
+                </li>
+                <li></li>
+            </ul>
+            <ul class="right">
+                <li><p id="menu">用户名:</p> &nbsp<input id="id_username" type="text" readonly value="{{ user.username }}"><input class="cls_change changeUsername" type="submit" value="修改"></li>
+                <li><p id="menu">邮箱:</p>  &nbsp <input id="id_email" type="text" readonly value="{{ user.email }}"><input class="cls_change changeEmail" type="submit" value="修改"></li>
+{#                <li><input id="id_change" type="submit" value="修改"></li>#}
+            </ul>
+        </div>
+
+        <div class="other"></div>
+    </div>
+{% endblock %}
+

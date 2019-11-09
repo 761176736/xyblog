@@ -1,6 +1,7 @@
 from django import forms
-from forms import FormMixin
 from .models import User
+from forms import FormMixin
+
 
 class EmailForm(forms.Form,FormMixin):
     email = forms.EmailField(error_messages={

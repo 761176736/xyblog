@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 class UserManager(BaseUserManager):
+
     def _create_user(self,email,username,password,**kwargs):
         if not email:
             raise ValueError('请传入邮箱！')
@@ -25,9 +26,9 @@ class UserManager(BaseUserManager):
         kwargs['is_staff'] = True
         return self._create_user(email,username,password,**kwargs)
 
+
 class User(AbstractBaseUser,PermissionsMixin):
-    # 我们不使用默认的自增长的主键
-    # id：100，101，102，103
+
     email = models.EmailField(unique=True,null=True,verbose_name='邮箱')
     username = models.CharField(max_length=100,verbose_name='用户名')
     nickname = models.CharField(max_length=100, verbose_name='昵称',null=True,blank=True)
@@ -44,9 +45,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     def __str__(self):
         return self.username
 
-
     USERNAME_FIELD = 'email'
-    # telephone，username，password
     REQUIRED_FIELDS = ['username']
     EMAIL_FIELD = 'email'
 
@@ -57,6 +56,7 @@ class User(AbstractBaseUser,PermissionsMixin):
 
     def get_short_name(self):
         return self.username
+
 
 class About(models.Model):
     info = models.TextField(null=True,verbose_name='本人详情')

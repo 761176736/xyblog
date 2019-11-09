@@ -1,10 +1,13 @@
 #encoding: utf-8
-from django.contrib.auth import login,logout,authenticate
+from django.shortcuts import redirect,reverse
 from django.views.decorators.http import require_POST
+from django.contrib.auth import login,logout,authenticate
+
+from utils import restful
 from user.models import User
 from .forms import LoginForm,RegisterForm
-from utils import restful
-from django.shortcuts import redirect,reverse
+
+
 
 
 @require_POST
@@ -38,15 +41,13 @@ def login_view(request):
         return restful.params_error(message=errors)
 
 
-
 def logout_view(request):
     '''
     退出登陆
-    :param request:
-    :return:
     '''
     logout(request)
     return redirect(reverse("blog:index"))
+
 
 @require_POST
 def register(request):
@@ -60,6 +61,6 @@ def register(request):
         user = User.objects.create_user(username=username,email=email,password=password)
         login(request,user)
         return restful.ok()
-    else:
 
+    else:
         return restful.params_error(message=form.get_errors())

@@ -1,11 +1,14 @@
-from django.views.generic import View
+#encoding: utf-8
+from django.db.models import Q
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Article,Category,ArticleToTag,Comment,Message
-from user.models import User,About
-from django.db.models import F,Q
+from django.views.generic import View
 from django.core.paginator import Paginator
+
 from utils import restful
+from user.models import User,About
+from .models import Article,Category,ArticleToTag,Comment,Message
+
 
 class Index(View):
     '''
@@ -14,11 +17,6 @@ class Index(View):
     def get(self,request):
         page = int(request.GET.get('p', 1))  # 获取页码，默认为第1页
         articles = Article.objects.order_by("-pub_time").all()
-
-        intr = User.objects.get(pk=1)
-        print('=='*20)
-        print(intr.intr,intr.username)
-        print('==' * 20)
         categories = Category.objects.all()
 
         paginator = Paginator(articles,7)
@@ -29,17 +27,16 @@ class Index(View):
             'articles':page_obj.object_list,
             'page_obj':page_obj,
             'categories':categories,
-            'intr':intr,
         }
 
         context.update(context_data)
         return render(request, 'index.html', context=context)
 
     def get_pagination_data(self, paginator, page_obj, around_count=1):
-        current_page = page_obj.number  # 当前页码
-        num_pages = paginator.num_pages  # 总页数
+        current_page = page_obj.number        # 当前页码
+        num_pages = paginator.num_pages        # 总页数
 
-        left_has_more = False  # 判断是否有'...'
+        left_has_more = False        # 判断是否有'...'
         right_has_more = False
 
         if current_page <= around_count + 3:
@@ -68,18 +65,13 @@ class Index(View):
 def about(request):
     '''
     关于我
-    :param request:
-    :return:
     '''
     categories = Category.objects.all()
-
-    intr = User.objects.filter(pk=1).first().intr
-    info = About.objects.filter(user_id=1).first().info
+    info = About.objects.filter(user_id=1).first()
 
     context={
         'categories':categories,
-        'intr':intr,
-        'info':info
+        'info':info.info
     }
     return render(request, 'about.html',context=context)
 
@@ -90,12 +82,10 @@ class  Messages(View):
     '''
     def get(self,request):
         categories = Category.objects.all()
-        intr = User.objects.filter(pk=1).first().intr
         messages = Message.objects.all()
 
         context = {
             'categories': categories,
-            'intr':intr,
             'messages':messages
         }
         return render(request,'message.html',context=context)
@@ -111,15 +101,10 @@ class  Messages(View):
 def detail(request,username,pk):
     '''
     文章详情
-    :param request:
-    :param username:
-    :param pk:
-    :return:
     '''
     user = User.objects.filter(username=username).first()
     article = Article.objects.filter(pk=pk).first()
     categories = Category.objects.all()
-    intr = User.objects.filter(pk=1).first().intr
 
     if article:
         article_views = article.view_num
@@ -141,7 +126,6 @@ def detail(request,username,pk):
             'previous':previuos,
             'next':next,
             'categories':categories,
-            'intr':intr,
         }
         return render(request, 'detail.html', context=context)
 
@@ -149,51 +133,40 @@ def detail(request,username,pk):
         return render(request,'404.html')
 
 
-
 def log_page(request):
-    '''登陆页面'''
+    '''
+    登陆页面
+    '''
     return render(request,'login.html')
-
 
 
 def comments(request, article_id):
     '''
     评论列表
-    :param request:
-    :param article_id:
-    :return:
     '''
     ret = list(Comment.objects.filter(article_id=article_id).values('pk', 'content', 'parent_comment_id','author'))
     return JsonResponse(ret, safe=False)
 
 
-
 def search(request):
     '''
     搜索
-    :param request:
-    :return:
     '''
     q = request.GET.get('search-text')
     categories = Category.objects.all()
-    intr = User.objects.filter(pk=1).first().intr
 
     if not q:
-        return render(request,'search.html',context={"error":"请输入关键字","categories":categories,'intr':intr})
+        return render(request,'search.html',context={"error":"请输入关键字","categories":categories})
     else:
         articles = Article.objects.filter(Q(title__icontains=q)|Q(info__info__icontains=q)).order_by("-pub_time").all()
-
         if len(articles) == 0:
-            return render(request, 'search.html', context={"message":'没有找到内容，换个关键词搜搜?','intr':intr})
+            return render(request, 'search.html', context={"message":'没有找到内容，换个关键词搜搜?'})
         else:
             context={
                 'articles':articles,
                 'categories':categories,
-                'intr':intr
             }
             return render(request,'search.html',context=context)
-
-
 
 
 def category_list(request,category):

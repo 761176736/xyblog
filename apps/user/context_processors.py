@@ -1,5 +1,6 @@
 from .models import User
 
+
 def about_context_processors(request):
     context = {}
     try:

@@ -3,7 +3,6 @@ from . import views
 
 app_name = 'user'
 
-#
 urlpatterns = [
     path('write/',views.Write_article.as_view(),name='write'),
     path('comment/',views.comment,name='comment'),

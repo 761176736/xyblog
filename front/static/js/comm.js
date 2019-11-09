@@ -41,7 +41,7 @@ obj.id='selected';
 	});
 	
 	
-	//回到顶部
+	//鍥炲埌椤堕儴
     // browser window scroll (in pixels) after which the "back to top" link is shown
     var offset = 300,
         //browser window scroll (in pixels) after which the "back to top" link opacity is reduced
@@ -67,7 +67,7 @@ obj.id='selected';
         );
     });
 	
-	//侧栏固定
+	//渚ф爮鍥哄畾
 		   
 	//aside
     var Sticky = new hcSticky('aside', {

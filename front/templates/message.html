@@ -12,7 +12,7 @@
             <h2>关于我</h2>
             <ul>
                 <i><img src="{% static 'images/1.jpg' %}"></i>
-                <p><b>余</b>{{ intr }}</p>
+                <p><b>{{ myname }}</b>,{{ myintr }}</p>
             </ul>
         </div>
 
@@ -71,7 +71,7 @@
                         </p>
                         <p>
                             <input class="messaage-sunmit" type="submit" name="Submit3" value="提交">
-{#                           <input name="enews" type="hidden" id="enews" value="AddGbook">#}
+
                         </p>
                     {% else %}
                         <p><span class="tnr">留言内容:</span>
@@ -82,7 +82,6 @@
                             <a href="{% url 'blog:log-page' %}"
                                style="display: block;background: #040404;color: #fff;border: 0;line-height: 30px;padding: 0 20px;border-radius: 5px;float: right;">登陆</a>
                                                     <input type="submit" name="Submit3" value="提交">
-{#                            <input name="enews" type="hidden" id="enews" value="AddGbook">#}
                         </p>
                     {% endif %}
 

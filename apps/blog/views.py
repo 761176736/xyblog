@@ -15,7 +15,10 @@ class Index(View):
         page = int(request.GET.get('p', 1))  # 获取页码，默认为第1页
         articles = Article.objects.order_by("-pub_time").all()
 
-        intr = User.objects.filter(pk=1).first().intr
+        intr = User.objects.get(pk=1)
+        print('=='*20)
+        print(intr.intr,intr.username)
+        print('==' * 20)
         categories = Category.objects.all()
 
         paginator = Paginator(articles,7)
@@ -78,9 +81,7 @@ def about(request):
         'intr':intr,
         'info':info
     }
-
     return render(request, 'about.html',context=context)
-
 
 
 class  Messages(View):

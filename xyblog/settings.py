@@ -73,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'user.context_processors.about_context_processors'
             ],
         },
     },
@@ -142,4 +143,11 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'front','media')
-# print(MEDIA_ROOT)
+
+
+
+import re
+DISALLOWED_USER_AGENTS = [
+    re.compile(r'^\s$|^$'),
+    re.compile(r'.*PhantomJS.*')
+]

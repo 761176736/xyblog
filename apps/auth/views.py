@@ -1,5 +1,6 @@
 #encoding: utf-8
 from django.shortcuts import redirect,reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.contrib.auth import login,logout,authenticate
 
@@ -8,8 +9,7 @@ from user.models import User
 from .forms import LoginForm,RegisterForm
 
 
-
-
+@csrf_exempt
 @require_POST
 def login_view(request):
     '''登陆'''
@@ -49,6 +49,7 @@ def logout_view(request):
     return redirect(reverse("blog:index"))
 
 
+@csrf_exempt
 @require_POST
 def register(request):
     '''注册'''

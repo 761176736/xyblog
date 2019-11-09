@@ -2,21 +2,23 @@
 from django.db.models import F
 from django.views.generic import View
 from django.shortcuts import render,redirect,reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse,JsonResponse
 
 import os
 import json
+from bs4 import BeautifulSoup
 
 from utils import restful
+from xyblog import settings
 from .forms import EmailForm
 from user.models import User
 from blog.models import Article,Likes,Comment,Info,Category,Tag,ArticleToTag
-from xyblog import settings
 
 
-
-
+@csrf_exempt
 def like(request):
     user = request.user
     article_id = request.POST.get('article_id')
@@ -29,7 +31,7 @@ def like(request):
         response['state'] = False
     return JsonResponse(response)
 
-
+@csrf_exempt
 def comment(request):
     '''
     评论
@@ -54,7 +56,6 @@ def comment(request):
     return JsonResponse(response)
 
 
-from bs4 import BeautifulSoup
 class Write_article(View):
     '''
     写文章
@@ -104,7 +105,7 @@ class Person(View):
     def get(self,request,username):
         return render(request,'pseron.html')
 
-
+@csrf_exempt
 @require_POST
 def change_email(request):
     '''
@@ -121,7 +122,7 @@ def change_email(request):
         errors = form.get_errors()
         return restful.params_error(message=errors)
 
-
+@csrf_exempt
 @require_POST
 def change_username(request):
     '''

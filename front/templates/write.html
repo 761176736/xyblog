@@ -59,6 +59,7 @@
 {% block article %}
     <div class="content">
         <form action="" method="post" style="margin-left: 100px">
+         {% csrf_token %}
             <div id="title">
                 <label for="">文章标题</label>
                 <input type="text" name="title" class="form-control">
@@ -71,10 +72,6 @@
                         <option value="{{ category }}">{{ category }}</option>
                     {% endfor %}
                 </select>
-
-
-
-
 
 
                 <label for="">文章标签:</label>
